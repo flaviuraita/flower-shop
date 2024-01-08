@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, SafeAreaView } from 'react-native';
-import OrderList from './components/OrderList';
+import OrderList from './src/components/OrderList';
 
 export default function App() {
   return (

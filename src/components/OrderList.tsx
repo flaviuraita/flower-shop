@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { StyleSheet, Text, Image, FlatList, Pressable } from "react-native"
+// @ts-ignore
+import { API_BASE_URL } from '@env'
 
 const statuses = ['received', 'pending', 'delivered']
 
@@ -23,7 +25,7 @@ const Order = ({order}) => {
       }
     }
 
-    await fetch(`localhost:3000/api/v1/orders/${order.item.id}`, {
+    await fetch(`${API_BASE_URL}/orders/${order.item.id}`, {
       method: 'PATCH',
       headers,
       body: JSON.stringify(body)
@@ -48,7 +50,7 @@ const OrderList = () => {
   const [orders, setOrders] = useState([]);
 
   const getOrders = async () => {
-    const response = await fetch('localhost:3000/api/v1/orders');
+    const response = await fetch(`${API_BASE_URL}/orders`);
     const json = await response.json();
 
     setOrders(json);
