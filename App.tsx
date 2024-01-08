@@ -1,12 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, SafeAreaView } from 'react-native';
-import OrderList from './src/components/OrderList';
+import Orders from './src/screens/Orders';
+import Stock from './src/screens/Stock';
+import Settings from './src/screens/Settings';
+import { NavigationContainer } from '@react-navigation/native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar style="auto" />
-      <OrderList />
+      <NavigationContainer>
+        <StatusBar style="auto" />
+        <Tab.Navigator>
+          <Tab.Screen name="Orders" component={Orders} />
+          <Tab.Screen name="Stock" component={Stock} />
+          <Tab.Screen name="Settings" component={Settings} />
+        </Tab.Navigator>
+      </NavigationContainer>
     </SafeAreaView>
   );
 }

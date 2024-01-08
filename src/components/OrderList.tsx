@@ -34,13 +34,11 @@ const Order = ({order}) => {
 
   return (
     <Pressable style={styles.order} onPress={updateStatus}>
-      <Text>{order.item.deliver_to.name}</Text>
-      <Text>{order.item.flower.name}</Text>
-      <Text>{order.item.flower.price}</Text>
-      <Text>{status}</Text>
+      <Text style={styles.orderItem}>{order.item.deliver_to.name}</Text>
+      <Text style={styles.orderItem}>{status}</Text>
       <Image
         source={{uri: order.item.flower.image_url}}
-        style={{width: 100, height: 100, borderRadius: 15}}
+        style={{...styles.orderItem, width: 100, height: 100, borderRadius: 15}}
       />
     </Pressable>
   )
@@ -62,7 +60,6 @@ const OrderList = () => {
 
   return (
     <>
-      <Text>Orders</Text>
       {orders && <FlatList
         data={orders}
         renderItem={((order) => <Order order={order}/>)}
@@ -78,6 +75,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 20,
+  },
+  orderItem: {
+    flex: 1,
   }
 })
 
