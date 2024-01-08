@@ -1,43 +1,24 @@
 import { useEffect, useState } from "react"
 import { StyleSheet, Text, Image, FlatList, Pressable } from "react-native"
-// @ts-ignore
-import { API_BASE_URL } from '@env'
+import { getOrders, updateOrderStatus } from "../api/orderService"
 
 const statuses = ['received', 'pending', 'delivered']
 
 const Order = ({order}) => {
-  const [status, setStatus] = useState(order.item.status)
+  const [status, setStatus] = useState(order.status)
 
   const updateStatus = async () => {
     const updatedStatus = statuses[statuses.findIndex(s => status === s) + 1] || statuses[0]
-    await requestUpdateStatus(updatedStatus);
+    await updateOrderStatus(order.id, updatedStatus);
     setStatus(updatedStatus)
-  }
-
-  const requestUpdateStatus = async (status: string) => {
-    const headers = {
-      "Content-Type": "application/json"
-    }
-
-    const body = {
-      order: {
-        status
-      }
-    }
-
-    await fetch(`${API_BASE_URL}/orders/${order.item.id}`, {
-      method: 'PATCH',
-      headers,
-      body: JSON.stringify(body)
-    })
   }
 
   return (
     <Pressable style={styles.order} onPress={updateStatus}>
-      <Text style={styles.orderItem}>{order.item.deliver_to.name}</Text>
+      <Text style={styles.orderItem}>{order.deliver_to.name}</Text>
       <Text style={styles.orderItem}>{status}</Text>
       <Image
-        source={{uri: order.item.flower.image_url}}
+        source={{uri: order.flower.image_url}}
         style={{...styles.orderItem, width: 100, height: 100, borderRadius: 15}}
       />
     </Pressable>
@@ -47,22 +28,20 @@ const Order = ({order}) => {
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
 
-  const getOrders = async () => {
-    const response = await fetch(`${API_BASE_URL}/orders`);
-    const json = await response.json();
-
-    setOrders(json);
+  const setOrdersState = async () => {
+    const orders = await getOrders();
+    setOrders(orders);
   }
 
   useEffect(() => {
-    getOrders();
+    setOrdersState()
   }, [])
 
   return (
     <>
       {orders && <FlatList
         data={orders}
-        renderItem={((order) => <Order order={order}/>)}
+        renderItem={((order) => <Order order={order.item}/>)}
         keyExtractor={order => order.id}
       />}
     </>
