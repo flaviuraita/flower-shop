@@ -1,4 +1,4 @@
-import SettingsMenu from "../components/SettingsMenu";
+import SettingsMenu from "../../components/SettingsMenu";
 
 export default function Settings() {
   return (

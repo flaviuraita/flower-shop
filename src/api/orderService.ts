@@ -8,7 +8,7 @@ export const getOrders = async () => {
 
     return json
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 }
 
@@ -30,6 +30,6 @@ export const updateOrderStatus = async (id, status) => {
       body: JSON.stringify(body)
     })
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 }

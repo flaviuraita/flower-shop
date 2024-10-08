@@ -1,4 +1,4 @@
-import FlowerStock from "../components/FlowerStock";
+import FlowerStock from "../../components/FlowerStock";
 
 export default function Stock() {
   return (

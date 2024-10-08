@@ -4,11 +4,13 @@ import { API_BASE_URL } from '@env'
 export const getFlowers = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/flowers`);
+    console.log(response);
+
     const json = await response.json();
 
     return json
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 }
 
@@ -30,6 +32,6 @@ export const updateFlowerStock = async (id, numberInStock) => {
       body: JSON.stringify(body)
     })
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 }
